@@ -5,12 +5,92 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Champions League Matches</title>
 <style>
-body{font-family:Arial;background:#07173d;color:#fff;margin:0;padding:30px}
-h1{text-align:center}
-#controls{text-align:center;margin:20px}
-button{padding:12px 22px;border:none;border-radius:8px;background:#0a84ff;color:#fff;font-weight:bold;cursor:pointer}
-.match{display:grid;grid-template-columns:1fr 60px 60px 1fr;gap:10px;align-items:center;background:#10285f;padding:10px;margin:8px 0;border-radius:10px}
-input{width:50px;padding:6px;text-align:center}
+body{
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#07173d,#0b2f7a,#004b9f);
+    color:#fff;
+    margin:0;
+    padding:30px;
+    min-height:100vh;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:30px;
+    font-size:38px;
+    text-shadow:0 0 12px rgba(255,255,255,.25);
+}
+
+#controls{
+    text-align:center;
+    margin:30px 0;
+}
+
+button{
+    padding:12px 24px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(90deg,#005eff,#00b3ff);
+    color:#fff;
+    font-weight:bold;
+    font-size:16px;
+    cursor:pointer;
+    margin:0 8px;
+    transition:.25s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 18px rgba(0,170,255,.7);
+}
+
+.match{
+    display:grid;
+    grid-template-columns:1fr 70px 70px 1fr;
+    align-items:center;
+    gap:15px;
+    background:rgba(16,40,95,.95);
+    border:1px solid rgba(255,255,255,.1);
+    padding:14px 18px;
+    margin:12px auto;
+    max-width:1100px;
+    border-radius:14px;
+    transition:.2s;
+}
+
+.match:hover{
+    background:#15367b;
+}
+
+.team{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.team img{
+    width:42px;
+    height:42px;
+    object-fit:contain;
+}
+
+.away{
+    justify-content:flex-end;
+}
+
+input{
+    width:60px;
+    padding:8px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+    border:none;
+    border-radius:8px;
+    background:#fff;
+    color:#000;
+}
 </style>
 </head>
 <body>
@@ -31,13 +111,27 @@ for(let i=0;i+1<clubs.length;i+=2){
 }
 
 fixtures.forEach((m,i)=>{
- matchesDiv.innerHTML+=`
- <div class="match">
- <div>${m.home.name}</div>
- <input type="number" min="0" id="h${i}" value="0">
- <input type="number" min="0" id="a${i}" value="0">
- <div style="text-align:right">${m.away.name}</div>
- </div>`;
+
+matchesDiv.innerHTML += `
+<div class="match">
+
+<div class="team home">
+<img src="${m.home.logo}" alt="">
+<span>${m.home.name}</span>
+</div>
+
+<input type="number" min="0" id="h${i}" value="0">
+
+<input type="number" min="0" id="a${i}" value="0">
+
+<div class="team away">
+<span>${m.away.name}</span>
+<img src="${m.away.logo}" alt="">
+</div>
+
+</div>
+`;
+
 });
 
 function saveResults(){
