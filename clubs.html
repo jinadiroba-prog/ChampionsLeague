@@ -5,56 +5,85 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       <title>Clubs</title>
       <style>
-     body{
-    font-family:Arial;
-    background:#f4f4f4;
+    body{
+    margin:0;
     padding:30px;
+    font-family:'Segoe UI',Arial,sans-serif;
+    background:linear-gradient(135deg,#07173d,#0a2d7a,#005eff);
+    min-height:100vh;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(255,255,255,.08) 1px,transparent 1px),
+        radial-gradient(circle at 80% 70%,rgba(255,255,255,.06) 1px,transparent 1px);
+    background-size:70px 70px;
+    pointer-events:none;
 }
 
 .counter{
-    z-index:1000;
     position:sticky;
-    top:10px;
-    background:#2196F3;
-    color:#fff;
+    top:15px;
+    z-index:1000;
     width:max-content;
-    padding:10px 15px;
-    border-radius:8px;
     margin:20px auto;
+    padding:12px 24px;
+    border-radius:15px;
+    background:linear-gradient(90deg,#005eff,#00b3ff);
+    color:#fff;
+    font-size:20px;
+    font-weight:bold;
+    box-shadow:0 0 20px rgba(0,120,255,.45);
 }
 
 .clubs{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
+    gap:22px;
 }
 
 .club{
     position:relative;
-    background:#fff;
+    background:rgba(255,255,255,.95);
     border:3px solid transparent;
-    border-radius:14px;
-    padding:15px;
+    border-radius:18px;
+    padding:18px;
     text-align:center;
     cursor:pointer;
+    transition:.25s;
+    overflow:hidden;
+}
+
+.club:hover{
+    transform:translateY(-6px) scale(1.03);
+    box-shadow:0 12px 30px rgba(0,0,0,.25);
 }
 
 .club.selected{
-    border-color:#2196F3;
+    border-color:#00aaff;
+    box-shadow:
+        0 0 20px rgba(0,170,255,.6),
+        0 0 40px rgba(0,94,255,.35);
 }
 
 .check{
     display:none;
     position:absolute;
-    top:8px;
-    right:8px;
-    width:28px;
-    height:28px;
+    top:10px;
+    right:10px;
+    width:34px;
+    height:34px;
     border-radius:50%;
-    background:#2196F3;
+    background:#00aaff;
     color:#fff;
+    font-size:18px;
+    font-weight:bold;
     align-items:center;
     justify-content:center;
+    box-shadow:0 0 15px rgba(0,170,255,.7);
 }
 
 .club.selected .check{
@@ -65,30 +94,49 @@
     width:100%;
     height:180px;
     object-fit:contain;
+    transition:.25s;
 }
 
-/* Continue Button */
+.club:hover img{
+    transform:scale(1.08);
+}
+
+.club h3{
+    margin:15px 0 8px;
+    color:#002b6b;
+    font-size:19px;
+}
+
+.club p{
+    margin:0;
+    color:#555;
+    font-size:14px;
+}
 
 #continueBtn{
     position:fixed;
-    bottom:20px;
-    right:20px;
+    right:25px;
+    bottom:25px;
     z-index:1000;
-    padding:14px 28px;
+    padding:15px 32px;
     border:none;
-    border-radius:12px;
+    border-radius:15px;
     background:linear-gradient(90deg,#005eff,#00b3ff);
     color:#fff;
     font-size:18px;
     font-weight:bold;
     cursor:pointer;
-    box-shadow:0 0 15px rgba(0,94,255,.5);
-    transition:.2s;
+    transition:.25s;
+    box-shadow:0 0 20px rgba(0,120,255,.55);
 }
 
 #continueBtn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 0 25px rgba(0,170,255,.8);
+    transform:translateY(-3px) scale(1.05);
+    box-shadow:0 0 35px rgba(0,170,255,.85);
+}
+
+#continueBtn:active{
+    transform:scale(.97);
 }
       </style>
    </head>
