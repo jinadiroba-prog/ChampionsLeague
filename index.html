@@ -244,62 +244,66 @@ border-radius:4px;
 
 <script>
 
-
 const clubs = JSON.parse(localStorage.getItem("uclTeams")) || [];
 const results = JSON.parse(localStorage.getItem("uclResults")) || [];
 
 const tbody = document.getElementById("tableBody");
 
-// Create stats for every club
-let table = {};
+// Create stats
+const table = {};
 
-clubs.forEach(club=>{
-    table[club.name]={
-        name:club.name,
-        logo:club.logo,
-        P:0,
-        W:0,
-        D:0,
-        L:0,
-        GF:0,
-        GA:0,
-        GD:0,
-        Pts:0
+clubs.forEach(club => {
+    table[club.name] = {
+        name: club.name,
+        logo: club.logo,
+        P: 0,
+        W: 0,
+        D: 0,
+        L: 0,
+        GF: 0,
+        GA: 0,
+        GD: 0,
+        Pts: 0
     };
 });
 
-// Read every saved match
-results.forEach(match=>{
+// Process results safely
+results.forEach(match => {
+
+    if (!match || !match.home || !match.away) return;
 
     const home = table[match.home.name];
     const away = table[match.away.name];
 
-    if(!home || !away) return;
+    if (!home || !away) return;
+
+    const hg = Number(match.hg) || 0;
+    const ag = Number(match.ag) || 0;
 
     home.P++;
     away.P++;
 
-    home.GF += match.hg;
-    home.GA += match.ag;
+    home.GF += hg;
+    home.GA += ag;
 
-    away.GF += match.ag;
-    away.GA += match.hg;
+    away.GF += ag;
+    away.GA += hg;
 
-    if(match.hg > match.ag){
+    if (hg > ag) {
 
         home.W++;
         home.Pts += 3;
 
         away.L++;
 
-    }else if(match.hg < match.ag){
+    } else if (hg < ag) {
 
         away.W++;
         away.Pts += 3;
 
         home.L++;
 
-    }else{
+    } else {
 
         home.D++;
         away.D++;
@@ -312,102 +316,87 @@ results.forEach(match=>{
 });
 
 // Goal Difference
-Object.values(table).forEach(club=>{
+Object.values(table).forEach(club => {
     club.GD = club.GF - club.GA;
 });
 
-// Sort standings
-let standings = Object.values(table).sort((a,b)=>{
+// Sort table
+const standings = Object.values(table).sort((a,b)=>{
 
-    if(b.Pts!=a.Pts)
-        return b.Pts-a.Pts;
+    if (b.Pts !== a.Pts)
+        return b.Pts - a.Pts;
 
-    if(b.GD!=a.GD)
-        return b.GD-a.GD;
+    if (b.GD !== a.GD)
+        return b.GD - a.GD;
 
-    return b.GF-a.GF;
-
-});
-
-// Build table
-tbody.innerHTML="";
-
-standings.forEach((club,index)=>{
-
-    let cls="out";
-
-    if(index<8)
-        cls="top8";
-    else if(index<24)
-        cls="playoff";
-
-    tbody.innerHTML+=`
-
-<tr class="${cls}">
-
-<td>${index+1}</td>
-
-<td>
-
-<div class="clubCell">
-
-<img src="${club.logo}">
-
-<span>${club.name}</span>
-
-</div>
-
-</td>
-
-<td>${club.P}</td>
-<td>${club.W}</td>
-<td>${club.D}</td>
-<td>${club.L}</td>
-<td>${club.GF}</td>
-<td>${club.GA}</td>
-<td>${club.GD}</td>
-<td><b>${club.Pts}</b></td>
-
-</tr>
-
-`;
+    return b.GF - a.GF;
 
 });
 
-// No clubs selected
-if(clubs.length===0){
+// Draw table
+tbody.innerHTML = "";
 
-tbody.innerHTML=`
+if (standings.length === 0) {
 
-<tr>
+    tbody.innerHTML = `
+    <tr>
+        <td colspan="10" style="padding:40px;font-size:18px;">
+            No clubs selected.<br><br>
+            Go back to the club selection page and choose up to 36 clubs.
+        </td>
+    </tr>
+    `;
 
-<td colspan="10" style="padding:40px;font-size:18px">
+} else {
 
-No clubs selected.<br><br>
+    standings.forEach((club,index)=>{
 
-Go back to the club selection page and choose up to 36 clubs.
+        let cls = "out";
 
-</td>
+        if(index < 8)
+            cls = "top8";
+        else if(index < 24)
+            cls = "playoff";
 
-</tr>
+        tbody.innerHTML += `
+        <tr class="${cls}">
 
-`;
+            <td>${index+1}</td>
+
+            <td>
+                <div class="clubCell">
+                    <img src="${club.logo}" alt="">
+                    <span>${club.name}</span>
+                </div>
+            </td>
+
+            <td>${club.P}</td>
+            <td>${club.W}</td>
+            <td>${club.D}</td>
+            <td>${club.L}</td>
+            <td>${club.GF}</td>
+            <td>${club.GA}</td>
+            <td>${club.GD}</td>
+            <td><b>${club.Pts}</b></td>
+
+        </tr>
+        `;
+
+    });
 
 }
 
-document.getElementById("backBtn").onclick=function(){
+// Buttons
+document.getElementById("backBtn").addEventListener("click", function () {
+    window.location.href = "clubs.html";
+});
 
-window.location.href="clubs.html";
-
-};
-
-document.getElementById("matchesBtn").onclick=function(){
-
-window.location.href="matches.html";
-
-};
+document.getElementById("matchesBtn").addEventListener("click", function () {
+    window.location.href = "matches.html";
+});
 
 </script>
+
 
 
 
