@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UEFA Champions League Table</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:
+radial-gradient(circle at top,#143b9c 0%,#07173d 35%,#020812 100%);
+color:white;
+padding:30px;
+min-height:100vh;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:radial-gradient(white 1px,transparent 1px);
+background-size:70px 70px;
+opacity:.08;
+pointer-events:none;
+}
+
+.header{
+text-align:center;
+margin-bottom:30px;
+}
+
+.header img{
+width:120px;
+margin-bottom:15px;
+filter:drop-shadow(0 0 8px #3da8ff)
+drop-shadow(0 0 20px #005eff);
+}
+
+.header h1{
+font-size:42px;
+letter-spacing:3px;
+text-transform:uppercase;
+}
+
+.header p{
+margin-top:8px;
+color:#d9e6ff;
+}
+
+.table-box{
+max-width:1350px;
+margin:auto;
+overflow:hidden;
+border-radius:20px;
+background:rgba(10,20,55,.75);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,.15);
+box-shadow:0 0 35px rgba(0,120,255,.35);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+thead{
+background:linear-gradient(90deg,#003cff,#00b3ff);
+}
+
+th{
+padding:14px;
+}
+
+td{
+padding:10px;
+text-align:center;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+tbody tr:hover{
+background:rgba(255,255,255,.06);
+}
+
+.clubCell{
+display:flex;
+align-items:center;
+gap:12px;
+font-weight:600;
+text-align:left;
+}
+
+.clubCell img{
+width:34px;
+height:34px;
+object-fit:contain;
+}
+
+.top8{
+border-left:6px solid #2dff8a;
+}
+
+.playoff{
+border-left:6px solid #ffd447;
+}
+
+.out{
+border-left:6px solid #ff5555;
+}
+
+.legend{
+display:flex;
+justify-content:center;
+gap:30px;
+margin-top:20px;
+}
+
+.legend div{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.color{
+width:16px;
+height:16px;
+border-radius:4px;
+}
+
+.green{background:#2dff8a;}
+.yellow{background:#ffd447;}
+.red{background:#ff5555;}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<img src="https://cdn-img.staticzz.com/img/logos/competicoes/27_imgbank_lc_20250314102703.png">
+
+<h1>UEFA Champions League</h1>
+
+<p>League Phase • 36 Clubs</p>
+
+</div>
+
+<div class="table-box">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>#</th>
+<th style="text-align:left;">Club</th>
+<th>P</th>
+<th>W</th>
+<th>D</th>
+<th>L</th>
+<th>GF</th>
+<th>GA</th>
+<th>GD</th>
+<th>Pts</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="legend">
+
+<div><span class="color green"></span>Round of 16</div>
+
+<div><span class="color yellow"></span>Knockout Play-offs</div>
+
+<div><span class="color red"></span>Eliminated</div>
+
+</div>
+
+<script>
+
+const clubs = JSON.parse(localStorage.getItem("uclTeams")) || [];
+
+const tbody = document.getElementById("tableBody");
+
+clubs.forEach((club,index)=>{
+
+let cls="out";
+
+if(index<8)
+cls="top8";
+else if(index<24)
+cls="playoff";
+
+tbody.innerHTML+=`
+
+<tr class="${cls}">
+
+<td>${index+1}</td>
+
+<td>
+
+<div class="clubCell">
+
+<img src="${club.logo}">
+
+<span>${club.name}</span>
+
+</div>
+
+</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>0</td>
+
+</tr>
+
+`;
+
+});
+
+if(clubs.length===0){
+
+tbody.innerHTML=`
+
+<tr>
+
+<td colspan="10" style="padding:40px;font-size:18px">
+
+No clubs selected.<br><br>
+
+Go back to the club selection page and choose up to 36 clubs.
+
+</td>
+
+</tr>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>
