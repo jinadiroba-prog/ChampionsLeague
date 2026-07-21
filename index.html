@@ -243,70 +243,171 @@ border-radius:4px;
 </div>
 
 <script>
+<script>
 
 const clubs = JSON.parse(localStorage.getItem("uclTeams")) || [];
+const results = JSON.parse(localStorage.getItem("uclResults")) || [];
 
 const tbody = document.getElementById("tableBody");
 
-clubs.forEach((club,index)=>{
+// Create stats for every club
+let table = {};
 
-let cls="out";
+clubs.forEach(club=>{
+    table[club.name]={
+        name:club.name,
+        logo:club.logo,
+        P:0,
+        W:0,
+        D:0,
+        L:0,
+        GF:0,
+        GA:0,
+        GD:0,
+        Pts:0
+    };
+});
 
-if(index<8){
-cls="top8";
-}else if(index<24){
-cls="playoff";
-}
+// Read every saved match
+results.forEach(match=>{
 
-tbody.innerHTML += `
+    const home = table[match.home.name];
+    const away = table[match.away.name];
+
+    if(!home || !away) return;
+
+    home.P++;
+    away.P++;
+
+    home.GF += match.hg;
+    home.GA += match.ag;
+
+    away.GF += match.ag;
+    away.GA += match.hg;
+
+    if(match.hg > match.ag){
+
+        home.W++;
+        home.Pts += 3;
+
+        away.L++;
+
+    }else if(match.hg < match.ag){
+
+        away.W++;
+        away.Pts += 3;
+
+        home.L++;
+
+    }else{
+
+        home.D++;
+        away.D++;
+
+        home.Pts++;
+        away.Pts++;
+
+    }
+
+});
+
+// Goal Difference
+Object.values(table).forEach(club=>{
+    club.GD = club.GF - club.GA;
+});
+
+// Sort standings
+let standings = Object.values(table).sort((a,b)=>{
+
+    if(b.Pts!=a.Pts)
+        return b.Pts-a.Pts;
+
+    if(b.GD!=a.GD)
+        return b.GD-a.GD;
+
+    return b.GF-a.GF;
+
+});
+
+// Build table
+tbody.innerHTML="";
+
+standings.forEach((club,index)=>{
+
+    let cls="out";
+
+    if(index<8)
+        cls="top8";
+    else if(index<24)
+        cls="playoff";
+
+    tbody.innerHTML+=`
+
 <tr class="${cls}">
+
 <td>${index+1}</td>
 
 <td>
+
 <div class="clubCell">
+
 <img src="${club.logo}">
+
 <span>${club.name}</span>
+
 </div>
+
 </td>
 
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
+<td>${club.P}</td>
+<td>${club.W}</td>
+<td>${club.D}</td>
+<td>${club.L}</td>
+<td>${club.GF}</td>
+<td>${club.GA}</td>
+<td>${club.GD}</td>
+<td><b>${club.Pts}</b></td>
 
 </tr>
+
 `;
 
 });
 
+// No clubs selected
 if(clubs.length===0){
 
 tbody.innerHTML=`
+
 <tr>
-<td colspan="10" style="padding:40px;font-size:18px;">
+
+<td colspan="10" style="padding:40px;font-size:18px">
+
 No clubs selected.<br><br>
+
 Go back to the club selection page and choose up to 36 clubs.
+
 </td>
+
 </tr>
+
 `;
 
 }
 
 document.getElementById("backBtn").onclick=function(){
 
-// Uncomment the next line if you want to clear the selected clubs
-// localStorage.removeItem("uclTeams");
-
 window.location.href="clubs.html";
 
 };
-  document.getElementById("matchesBtn").onclick = function () {
-    window.location.href = "matches.html";
+
+document.getElementById("matchesBtn").onclick=function(){
+
+window.location.href="matches.html";
+
 };
+
+</script>
 
 </script>
 
