@@ -494,7 +494,18 @@ document.querySelectorAll(".club").forEach(club => {
         );
 
     };
+document.getElementById("continueBtn").onclick = function () {
 
+    if(selectedClubs.length !== 36){
+        alert("Please select exactly 36 clubs.");
+        return;
+    }
+
+    localStorage.setItem("uclTeams", JSON.stringify(selectedClubs));
+
+    window.location.href = "index.html";
+
+};
 });</script>
    </body>
 </html>
