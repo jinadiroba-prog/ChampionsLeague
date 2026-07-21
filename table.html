@@ -35,6 +35,30 @@ opacity:.08;
 pointer-events:none;
 }
 
+/* Back Button */
+
+#backBtn{
+position:fixed;
+top:20px;
+left:20px;
+padding:12px 22px;
+border:none;
+border-radius:12px;
+background:linear-gradient(90deg,#004bff,#00b8ff);
+color:#fff;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+box-shadow:0 0 20px rgba(0,140,255,.5);
+transition:.25s;
+z-index:1000;
+}
+
+#backBtn:hover{
+transform:translateY(-2px);
+box-shadow:0 0 30px rgba(0,170,255,.8);
+}
+
 .header{
 text-align:center;
 margin-bottom:30px;
@@ -43,7 +67,8 @@ margin-bottom:30px;
 .header img{
 width:120px;
 margin-bottom:15px;
-filter:drop-shadow(0 0 8px #3da8ff)
+filter:
+drop-shadow(0 0 8px #3da8ff)
 drop-shadow(0 0 20px #005eff);
 }
 
@@ -147,6 +172,8 @@ border-radius:4px;
 
 <body>
 
+<button id="backBtn">← Back to Clubs</button>
+
 <div class="header">
 
 <img src="https://cdn-img.staticzz.com/img/logos/competicoes/27_imgbank_lc_20250314102703.png">
@@ -164,7 +191,6 @@ border-radius:4px;
 <thead>
 
 <tr>
-
 <th>#</th>
 <th style="text-align:left;">Club</th>
 <th>P</th>
@@ -175,7 +201,6 @@ border-radius:4px;
 <th>GA</th>
 <th>GD</th>
 <th>Pts</th>
-
 </tr>
 
 </thead>
@@ -189,13 +214,9 @@ border-radius:4px;
 </div>
 
 <div class="legend">
-
 <div><span class="color green"></span>Round of 16</div>
-
 <div><span class="color yellow"></span>Knockout Play-offs</div>
-
 <div><span class="color red"></span>Eliminated</div>
-
 </div>
 
 <script>
@@ -208,47 +229,33 @@ clubs.forEach((club,index)=>{
 
 let cls="out";
 
-if(index<8)
+if(index<8){
 cls="top8";
-else if(index<24)
+}else if(index<24){
 cls="playoff";
+}
 
-tbody.innerHTML+=`
-
+tbody.innerHTML += `
 <tr class="${cls}">
-
 <td>${index+1}</td>
 
 <td>
-
 <div class="clubCell">
-
 <img src="${club.logo}">
-
 <span>${club.name}</span>
-
 </div>
-
 </td>
 
 <td>0</td>
-
 <td>0</td>
-
 <td>0</td>
-
 <td>0</td>
-
 <td>0</td>
-
 <td>0</td>
-
 <td>0</td>
-
 <td>0</td>
 
 </tr>
-
 `;
 
 });
@@ -256,22 +263,24 @@ tbody.innerHTML+=`
 if(clubs.length===0){
 
 tbody.innerHTML=`
-
 <tr>
-
-<td colspan="10" style="padding:40px;font-size:18px">
-
+<td colspan="10" style="padding:40px;font-size:18px;">
 No clubs selected.<br><br>
-
 Go back to the club selection page and choose up to 36 clubs.
-
 </td>
-
 </tr>
-
 `;
 
 }
+
+document.getElementById("backBtn").onclick=function(){
+
+// Uncomment the next line if you want to clear the selected clubs
+// localStorage.removeItem("uclTeams");
+
+window.location.href="clubs.html";
+
+};
 
 </script>
 
