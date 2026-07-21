@@ -5,7 +5,91 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       <title>Clubs</title>
       <style>
-         body{font-family:Arial;background:#f4f4f4;padding:30px}.counter{ z-index: 1000; position:sticky;top:10px;background:#2196F3;color:#fff;width:max-content;padding:10px 15px;border-radius:8px;margin:20px auto}.clubs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}.club{position:relative;background:#fff;border:3px solid transparent;border-radius:14px;padding:15px;text-align:center;cursor:pointer}.club.selected{border-color:#2196F3}.check{display:none;position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:#2196F3;color:#fff;align-items:center;justify-content:center}.club.selected .check{display:flex}.club img{width:100%;height:180px;object-fit:contain}
+     body{
+    font-family:Arial;
+    background:#f4f4f4;
+    padding:30px;
+}
+
+.counter{
+    z-index:1000;
+    position:sticky;
+    top:10px;
+    background:#2196F3;
+    color:#fff;
+    width:max-content;
+    padding:10px 15px;
+    border-radius:8px;
+    margin:20px auto;
+}
+
+.clubs{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.club{
+    position:relative;
+    background:#fff;
+    border:3px solid transparent;
+    border-radius:14px;
+    padding:15px;
+    text-align:center;
+    cursor:pointer;
+}
+
+.club.selected{
+    border-color:#2196F3;
+}
+
+.check{
+    display:none;
+    position:absolute;
+    top:8px;
+    right:8px;
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:#2196F3;
+    color:#fff;
+    align-items:center;
+    justify-content:center;
+}
+
+.club.selected .check{
+    display:flex;
+}
+
+.club img{
+    width:100%;
+    height:180px;
+    object-fit:contain;
+}
+
+/* Continue Button */
+
+#continueBtn{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    z-index:1000;
+    padding:14px 28px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#005eff,#00b3ff);
+    color:#fff;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 15px rgba(0,94,255,.5);
+    transition:.2s;
+}
+
+#continueBtn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 25px rgba(0,170,255,.8);
+}
       </style>
    </head>
    <body>
