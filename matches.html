@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Champions League Matches</title>
+<style>
+body{font-family:Arial;background:#07173d;color:#fff;margin:0;padding:30px}
+h1{text-align:center}
+#controls{text-align:center;margin:20px}
+button{padding:12px 22px;border:none;border-radius:8px;background:#0a84ff;color:#fff;font-weight:bold;cursor:pointer}
+.match{display:grid;grid-template-columns:1fr 60px 60px 1fr;gap:10px;align-items:center;background:#10285f;padding:10px;margin:8px 0;border-radius:10px}
+input{width:50px;padding:6px;text-align:center}
+</style>
+</head>
+<body>
+<h1>UEFA Champions League - League Phase Matches</h1>
+<div id="matches"></div>
+<div id="controls">
+<button onclick="saveResults()">Save Results</button>
+<button onclick="location.href='index.html'">View Table</button>
+</div>
+<script>
+const clubs=JSON.parse(localStorage.getItem("uclTeams"))||[];
+const matchesDiv=document.getElementById("matches");
+let fixtures=[];
+
+// Simple fixture generator: pair consecutive clubs.
+for(let i=0;i+1<clubs.length;i+=2){
+ fixtures.push({home:clubs[i],away:clubs[i+1]});
+}
+
+fixtures.forEach((m,i)=>{
+ matchesDiv.innerHTML+=`
+ <div class="match">
+ <div>${m.home.name}</div>
+ <input type="number" min="0" id="h${i}" value="0">
+ <input type="number" min="0" id="a${i}" value="0">
+ <div style="text-align:right">${m.away.name}</div>
+ </div>`;
+});
+
+function saveResults(){
+ const results=fixtures.map((m,i)=>({
+   home:m.home,
+   away:m.away,
+   hg:+document.getElementById("h"+i).value,
+   ag:+document.getElementById("a"+i).value
+ }));
+ localStorage.setItem("uclResults",JSON.stringify(results));
+ alert("Results saved. Open index.html.");
+}
+</script>
+</body>
+</html>
