@@ -107,25 +107,47 @@ let fixtures=[];
 
 // Generate League Phase fixtures (8 matches per club)
 
-for (let i = 0; i < clubs.length; i++) {
+// ---------- Generate exactly 8 matches per club ----------
 
-    for (let j = 1; j <= 8; j++) {
+const gamesPlayed = Array(clubs.length).fill(0);
+const played = new Set();
 
-        const opponent = (i + j) % clubs.length;
+while (gamesPlayed.some(g => g < 8)) {
 
-        // Only add each fixture once
-        if (i < opponent) {
+    let found = false;
+
+    for (let i = 0; i < clubs.length; i++) {
+
+        if (gamesPlayed[i] >= 8) continue;
+
+        for (let j = i + 1; j < clubs.length; j++) {
+
+            if (gamesPlayed[j] >= 8) continue;
+
+            const key = i + "-" + j;
+
+            if (played.has(key)) continue;
 
             fixtures.push({
                 home: clubs[i],
-                away: clubs[opponent]
+                away: clubs[j]
             });
 
-        }
+            played.add(key);
 
+            gamesPlayed[i]++;
+            gamesPlayed[j]++;
+
+            found = true;
+            break;
+        }
     }
 
+    if (!found) break;
 }
+
+console.log(gamesPlayed);
+console.log(fixtures.length);
 
 
 fixtures.forEach((m,i)=>{
