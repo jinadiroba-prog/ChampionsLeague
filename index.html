@@ -187,6 +187,25 @@ border-radius:4px;
     transform:translateY(-2px);
     box-shadow:0 0 25px rgba(0,170,255,.8);
 }
+.bottom-image {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 150px;
+    height: auto;
+    filter: drop-shadow(0 0 10px #00ffff)
+            drop-shadow(0 0 20px #00ffff)
+            drop-shadow(0 0 30px #00ffff);
+    transition: 0.3s ease;
+}
+
+.bottom-image:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 15px #00ffff)
+            drop-shadow(0 0 30px #00ffff)
+            drop-shadow(0 0 50px #00ffff);
+}
+
 
 </style>
 
@@ -196,6 +215,7 @@ border-radius:4px;
 
 <button id="backBtn">← Back to Clubs</button>
 <button id="matchesBtn">Matches →</button>
+<img src="Sui.png" class="bottom-image">
 
 <div class="header">
 
