@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UEFA Champions League Knockout Stage</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:
+radial-gradient(circle at top,#143b9c 0%,#07173d 35%,#020812 100%);
+color:white;
+min-height:100vh;
+padding:30px;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(white 1px,transparent 1px);
+background-size:70px 70px;
+opacity:.08;
+pointer-events:none;
+}
+
+/* Header */
+
+.header{
+text-align:center;
+margin-bottom:35px;
+}
+
+.header img{
+width:120px;
+margin-bottom:15px;
+filter:
+drop-shadow(0 0 8px #3da8ff)
+drop-shadow(0 0 20px #005eff);
+}
+
+.header h1{
+font-size:42px;
+letter-spacing:3px;
+text-transform:uppercase;
+}
+
+.header p{
+margin-top:8px;
+color:#d9e6ff;
+}
+
+/* Buttons */
+
+.topButtons{
+display:flex;
+justify-content:space-between;
+margin-bottom:25px;
+}
+
+button{
+
+padding:12px 24px;
+border:none;
+border-radius:12px;
+
+background:
+linear-gradient(90deg,#004cff,#00b3ff);
+
+color:white;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+
+transition:.25s;
+
+box-shadow:
+0 0 15px rgba(0,120,255,.45);
+
+}
+
+button:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 0 25px rgba(0,180,255,.75);
+
+}
+
+/* Bracket */
+
+.bracket{
+
+display:grid;
+
+grid-template-columns:
+320px
+320px
+320px
+320px
+320px;
+
+gap:35px;
+
+overflow-x:auto;
+
+padding-bottom:20px;
+
+}
+
+.round{
+
+display:flex;
+
+flex-direction:column;
+
+gap:20px;
+
+}
+
+.round h2{
+
+text-align:center;
+
+margin-bottom:10px;
+
+letter-spacing:1px;
+
+color:#ffffff;
+
+}
+
+/* Match */
+
+.match{
+
+background:
+rgba(10,20,55,.78);
+
+border:
+1px solid rgba(255,255,255,.15);
+
+border-radius:14px;
+
+padding:14px;
+
+box-shadow:
+0 0 18px rgba(0,120,255,.25);
+
+}
+
+.team{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+gap:10px;
+
+padding:8px 0;
+
+}
+
+.teamInfo{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+}
+
+.team img{
+
+width:34px;
+height:34px;
+object-fit:contain;
+
+}
+
+.score{
+
+width:48px;
+
+padding:6px;
+
+border:none;
+
+border-radius:6px;
+
+text-align:center;
+
+font-size:16px;
+
+font-weight:bold;
+
+}
+
+/* Champion */
+
+.champion{
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+height:100%;
+
+font-size:28px;
+
+font-weight:700;
+
+color:#ffd700;
+
+text-shadow:
+
+0 0 15px gold;
+
+}
+
+.trophy{
+
+font-size:90px;
+
+margin-bottom:15px;
+
+}
+
+/* Responsive */
+
+@media(max-width:1400px){
+
+.bracket{
+
+grid-template-columns:repeat(5,320px);
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topButtons">
+
+<button onclick="location.href='index.html'">
+← League Table
+</button>
+
+<button id="saveBtn">
+Save Knockout Results
+</button>
+
+</div>
+
+<div class="header">
+
+<img src="https://cdn-img.staticzz.com/img/logos/competicoes/27_imgbank_lc_20250314102703.png">
+
+<h1>UEFA Champions League</h1>
+
+<p>Knockout Stage</p>
+
+</div>
+
+<div class="bracket">
+
+<!-- PLAYOFFS -->
+
+<div class="round">
+
+<h2>Play-offs</h2>
+
+<div id="playoffs"></div>
+
+</div>
+
+<!-- ROUND OF 16 -->
+
+<div class="round">
+
+<h2>Round of 16</h2>
+
+<div id="r16"></div>
+
+</div>
+
+<!-- QUARTER FINALS -->
+
+<div class="round">
+
+<h2>Quarter-finals</h2>
+
+<div id="quarters"></div>
+
+</div>
+
+<!-- SEMI FINALS -->
+
+<div class="round">
+
+<h2>Semi-finals</h2>
+
+<div id="semis"></div>
+
+</div>
+
+<!-- FINAL -->
+
+<div class="round">
+
+<h2>Final</h2>
+
+<div id="final"></div>
+
+<div class="champion">
+
+<div class="trophy">
+🏆
+</div>
+
+<div id="champion">
+
+Champion
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+// Part 6 will begin here.
+
+</script>
+
+</body>
+</html>
