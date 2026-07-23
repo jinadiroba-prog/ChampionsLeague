@@ -105,10 +105,28 @@ const clubs=JSON.parse(localStorage.getItem("uclTeams"))||[];
 const matchesDiv=document.getElementById("matches");
 let fixtures=[];
 
-// Simple fixture generator: pair consecutive clubs.
-for(let i=0;i+1<clubs.length;i+=2){
- fixtures.push({home:clubs[i],away:clubs[i+1]});
+// Generate League Phase fixtures (8 matches per club)
+
+for (let i = 0; i < clubs.length; i++) {
+
+    for (let j = 1; j <= 8; j++) {
+
+        const opponent = (i + j) % clubs.length;
+
+        // Only add each fixture once
+        if (i < opponent) {
+
+            fixtures.push({
+                home: clubs[i],
+                away: clubs[opponent]
+            });
+
+        }
+
+    }
+
 }
+
 
 fixtures.forEach((m,i)=>{
 
