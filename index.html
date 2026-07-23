@@ -187,6 +187,27 @@ border-radius:4px;
     transform:translateY(-2px);
     box-shadow:0 0 25px rgba(0,170,255,.8);
 }
+  #knockoutsBtn{
+    position:fixed;
+    top:80px;
+    right:20px;
+    z-index:1000;
+    padding:12px 24px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#6a00ff,#b300ff);
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow:0 0 15px rgba(170,0,255,.5);
+    transition:.25s;
+}
+
+#knockoutsBtn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 25px rgba(200,0,255,.8);
+}
 .bottom-image {
     position: fixed;
     bottom: 20px;
@@ -216,6 +237,7 @@ border-radius:4px;
 
 <button id="backBtn">← Back to Clubs</button>
 <button id="matchesBtn">Matches →</button>
+<button id="knockoutsBtn">Knockouts →</button>
 <a href="https://www.uefa.com/uefachampionsleague/match/2037800--man-city-vs-real-madrid/" target="_blank">
 <img src="Sui.png" class="bottom-image">
 </a>
@@ -416,6 +438,9 @@ document.getElementById("backBtn").addEventListener("click", function () {
 document.getElementById("matchesBtn").addEventListener("click", function () {
     window.location.href = "matches.html";
 });
+document.getElementById("knockoutsBtn").onclick = function () {
+    window.location.href = "knockouts.html";
+};
 
 </script>
 
