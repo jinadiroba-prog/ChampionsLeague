@@ -356,7 +356,218 @@ Champion
 
 <script>
 
-// Part 6 will begin here.
+<script>
+
+const clubs = JSON.parse(localStorage.getItem("uclTeams")) || [];
+const results = JSON.parse(localStorage.getItem("uclResults")) || [];
+
+// ----------------------
+// Calculate League Table
+// ----------------------
+
+const table = {};
+
+clubs.forEach(club => {
+
+    table[club.name] = {
+        name: club.name,
+        logo: club.logo,
+        P:0,
+        W:0,
+        D:0,
+        L:0,
+        GF:0,
+        GA:0,
+        GD:0,
+        Pts:0
+    };
+
+});
+
+results.forEach(match=>{
+
+    if(!match || !match.home || !match.away) return;
+
+    const home = table[match.home.name];
+    const away = table[match.away.name];
+
+    if(!home || !away) return;
+
+    home.P++;
+    away.P++;
+
+    home.GF += match.hg;
+    home.GA += match.ag;
+
+    away.GF += match.ag;
+    away.GA += match.hg;
+
+    if(match.hg > match.ag){
+
+        home.W++;
+        home.Pts += 3;
+        away.L++;
+
+    }
+
+    else if(match.ag > match.hg){
+
+        away.W++;
+        away.Pts += 3;
+        home.L++;
+
+    }
+
+    else{
+
+        home.D++;
+        away.D++;
+
+        home.Pts++;
+        away.Pts++;
+
+    }
+
+});
+
+Object.values(table).forEach(c=>{
+
+    c.GD = c.GF - c.GA;
+
+});
+
+const standings = Object.values(table).sort((a,b)=>{
+
+    if(b.Pts != a.Pts)
+        return b.Pts-a.Pts;
+
+    if(b.GD != a.GD)
+        return b.GD-a.GD;
+
+    return b.GF-a.GF;
+
+});
+
+// ----------------------
+// Qualified Clubs
+// ----------------------
+
+const top8 = standings.slice(0,8);
+
+const playoffTeams = standings.slice(8,24);
+
+// ----------------------
+// Containers
+// ----------------------
+
+const playoffsDiv = document.getElementById("playoffs");
+const r16Div = document.getElementById("r16");
+
+// ----------------------
+// Create Play-offs
+// ----------------------
+
+const playoffPairs = [
+
+[0,15],
+[1,14],
+[2,13],
+[3,12],
+[4,11],
+[5,10],
+[6,9],
+[7,8]
+
+];
+
+playoffPairs.forEach((pair,i)=>{
+
+const home = playoffTeams[pair[0]];
+const away = playoffTeams[pair[1]];
+
+playoffsDiv.innerHTML += `
+
+<div class="match">
+
+<div class="team">
+
+<div class="teamInfo">
+
+<img src="${home.logo}">
+
+<span>${home.name}</span>
+
+</div>
+
+<input class="score" id="ph${i}" type="number" min="0" value="0">
+
+</div>
+
+<div class="team">
+
+<div class="teamInfo">
+
+<img src="${away.logo}">
+
+<span>${away.name}</span>
+
+</div>
+
+<input class="score" id="pa${i}" type="number" min="0" value="0">
+
+</div>
+
+</div>
+
+`;
+
+});
+
+// ----------------------
+// Round of 16
+// ----------------------
+
+top8.forEach((club,i)=>{
+
+r16Div.innerHTML += `
+
+<div class="match">
+
+<div class="team">
+
+<div class="teamInfo">
+
+<img src="${club.logo}">
+
+<span>${club.name}</span>
+
+</div>
+
+<input class="score" id="r16h${i}" type="number" min="0" value="0">
+
+</div>
+
+<div class="team">
+
+<div class="teamInfo">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg">
+
+<span>Winner Play-off ${i+1}</span>
+
+</div>
+
+<input class="score" id="r16a${i}" type="number" min="0" value="0">
+
+</div>
+
+</div>
+
+`;
+
+});
+
+</script>
 
 </script>
 
